@@ -16,5 +16,8 @@
     "request-promise": "^4.2.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3"
+  },
+  "devDependencies": {
+    "@types/request-promise": "^4.1.46"
   }
 }
