@@ -1,9 +1,18 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 import BillaTable from './BillaTable';
-import { SearchResults } from '../../server/billa-client/types';
+import { SearchResultsWithInfos } from '../../server/billa-client/types';
 
 export default function App() {
-  const [data, setData] = useState<undefined | SearchResults>();
+  const [data, setData] = useState<undefined | SearchResultsWithInfos>();
+  // useEffect(() => {
+  //   fetch("/api/searchByUrl?includeInfos=true", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({ url: "https://www.billa.at/warengruppe/grundnahrungsmittel/muesli-und-cerealien/B2-6B" })
+  //   }).then(r => r.json()).then(setData);
+  // }, [])
   if (!data) {
     return (
       <UrlChooser onDataFetched={setData}/>
@@ -24,7 +33,7 @@ function UrlChooser({ onDataFetched }: any) {
 
     const form = ev.target as any;
     try {
-      const data = await fetch("/api/searchByUrl", {
+      const data = await fetch("/api/searchByUrl?includeInfos=true", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -37,6 +46,7 @@ function UrlChooser({ onDataFetched }: any) {
       setFetching(false);
     }
   }
+
   return (
     <form onSubmit={onSubmit}>
       <input disabled={fetching} name="url" className="url-chooser" type="text" defaultValue="https://www.billa.at/warengruppe/grundnahrungsmittel/muesli-und-cerealien/B2-6B"/>

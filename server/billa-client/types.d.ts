@@ -1,5 +1,8 @@
 export type ArticleID = string;
 
+export interface SearchResultsWithInfos {
+  tiles: SearchResultWithInfos[];
+}
 export interface SearchResults {
   tiles: SearchResult[];
 }
@@ -8,7 +11,17 @@ export interface SearchResult {
   data: {
     articleId: ArticleID;
     name: string;
+    price: {
+      normal: number;
+      sale: number;
+      unit: string;
+      final: number;
+    }
   }
+}
+
+export interface SearchResultWithInfos extends SearchResult {
+  infos: ArticleInfos
 }
 
 export interface SearchFilter {
@@ -22,7 +35,7 @@ export interface ArticleInfos {
 }
 
 export interface Nutritions {
-  preparationGrade: string;
+  preperationGrade: string;
   unit: string;
   relationValue: number;
   nutritions: Nutrition[];
