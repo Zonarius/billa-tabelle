@@ -7,8 +7,12 @@ const apiRouter = express.Router();
 
 apiRouter.use(body.json());
 
-apiRouter.get("/searchByUrl", async (req, res) => {
-  const response = await billa.searchByUrl(req.body.url);
+apiRouter.post("/searchByUrl", async (req, res) => {
+  const url = req.body.url;
+  if (!url) {
+    return res.sendStatus(400);
+  }
+  const response = await billa.searchByUrl(url);
   res.send(response);
 })
 
